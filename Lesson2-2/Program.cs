@@ -1,6 +1,4 @@
-﻿
-
-namespace Lesson2
+﻿namespace Lesson2
 {
 
     public class BankAccount
@@ -18,9 +16,16 @@ namespace Lesson2
         }
 
 
-        private uint accountNumber = 5;
-        private int accountBalance = 12345678;
+        public static uint accountNumber = 12345678;
+        private int accountBalance = 100000;
         private AccountType ClientAccountType = AccountType.MainAccount;
+
+        public void AddAccountNumber()
+        {
+            accountNumber += 1;
+
+        }
+
         public uint ReadAccountNumber()
         {
             return accountNumber;
@@ -62,18 +67,38 @@ namespace Lesson2
             uint clientZaremaAccountNumber = ClientZarema.ReadAccountNumber();
             BankAccount.AccountType clienZaremaAccountType = ClientZarema.ReadClientAccountType();
             int clientZaremaBalance = ClientZarema.ReadAccountBalance();
-            Console.WriteLine($"{clientZaremaAccountNumber} {clientZaremaBalance} {clienZaremaAccountType}");
+            Console.WriteLine($"Банковский счет Заремы: номер: { clientZaremaAccountNumber} баланс:{clientZaremaBalance} тип счета:{clienZaremaAccountType}");
 
-            //заполняем и потом опять считываем
-            ClientZarema.WriteAccountNumber(1000000);
+
+            //заполняем клиента Зарема и потом опять считываем
+
             ClientZarema.WriteAccountBalance(9000);
             ClientZarema.WriteClientAccountType(BankAccount.AccountType.AccountInYuan);
-            clientZaremaAccountNumber = ClientZarema.ReadAccountNumber();
+            ClientZarema.AddAccountNumber();
             clienZaremaAccountType = ClientZarema.ReadClientAccountType();
             clientZaremaBalance = ClientZarema.ReadAccountBalance();
-            Console.WriteLine($"{clientZaremaAccountNumber} {clientZaremaBalance} {clienZaremaAccountType}");
+
+
+
+            //создаю объект клиента Промеса и считываю данные с приватных полей
+            BankAccount ClientPromes = new BankAccount();
+            uint clientPromesAccountNumber = ClientPromes.ReadAccountNumber();
+            BankAccount.AccountType clienPromesAccountType = ClientPromes.ReadClientAccountType();
+            int clientPromesBalance = ClientPromes.ReadAccountBalance();
+
+
+
+            //заполняем клиента Промеса и потом опять считываем
+
+            ClientPromes.WriteAccountBalance(8000);
+            ClientPromes.WriteClientAccountType(BankAccount.AccountType.DollarAccount);
+            ClientPromes.AddAccountNumber();
+            clienPromesAccountType = ClientPromes.ReadClientAccountType();
+            clientPromesBalance = ClientPromes.ReadAccountBalance();
+            Console.WriteLine($"Банковский счет Промеса: номер: { clientPromesAccountNumber} баланс:{clientPromesBalance} тип счета:{clienPromesAccountType}");
+
 
         }
     }
 
-}    
+}
